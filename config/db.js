@@ -4,9 +4,9 @@ const env = require("./envConfig");
 const connect = async () => {
   try {
     await mongoose.connect(env.MONGO_URL);
-    console.log("Database Connected: ✅ ✅");
+    console.log("Database Connected: ✅");
   } catch (error) {
-    console.log("Error connecting: ❌ ❌");
+    console.log("Error connecting: ❌");
     process.exit;
   }
 };
