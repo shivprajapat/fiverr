@@ -60,7 +60,11 @@ const login = async (req, res, next) => {
 // @access  Public
 
 const logout = async (req, res) => {
-  res.send({ name: "logout user" });
+
+  res.clearCookie("accessToken", {
+    sameSite: "none",
+    secure: true,
+  }).status(status.OK).send("User has been logged out.");
 };
 
 module.exports = { register, login, logout };
