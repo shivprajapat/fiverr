@@ -2,6 +2,7 @@ const express = require("express");
 const env = require("./config/envConfig");
 const connect = require("./config/db");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const { status } = require("./helper/api.responses");
 
 const port = env.PORT || 8800;
@@ -9,6 +10,7 @@ const port = env.PORT || 8800;
 const app = express();
 // database connection
 connect();
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
