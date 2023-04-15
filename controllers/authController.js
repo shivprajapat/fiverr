@@ -34,7 +34,9 @@ const login = async (req, res, next) => {
     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
 
     if (!isCorrect)
-      return next(createError(status.BadRequest, "Wrong password or username!"));
+      return next(
+        createError(status.BadRequest, "Wrong password or username!")
+      );
 
     const token = jwt.sign(
       {
@@ -46,7 +48,8 @@ const login = async (req, res, next) => {
     const { password, ...info } = user._doc;
     res
       .cookie("accessToken", token, {
-        httpOnly: true,
+        httpOnly: true, 
+        secure: env.NODE_ENV === "Development" ? false :true,
       })
       .status(status.OK)
       .send(info);
@@ -60,11 +63,13 @@ const login = async (req, res, next) => {
 // @access  Public
 
 const logout = async (req, res) => {
-
-  res.clearCookie("accessToken", {
-    sameSite: "none",
-    secure: true,
-  }).status(status.OK).send("User has been logged out.");
+  res
+    .clearCookie("accessToken", {
+      sameSite: "none",
+      secure: true,
+    })
+    .status(status.OK)
+    .send("User has been logged out.");
 };
 
 module.exports = { register, login, logout };

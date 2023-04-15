@@ -10,7 +10,13 @@ const port = env.PORT || 8800;
 const app = express();
 // database connection
 connect();
-app.use(cors());
+app.use(
+  cors({
+    origin: port,
+    method: ["GET", "POST", "PUT", "DELETE"],
+    credentials: "true",
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -35,5 +41,5 @@ app.get("/", (req, res) =>
 );
 
 app.listen(port, () => {
-  console.log(`Backend server is running! ${port}`);
+  console.log(`Backend server is running! ${env.NODE_ENV}`);
 });
