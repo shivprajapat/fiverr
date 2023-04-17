@@ -48,8 +48,9 @@ const login = async (req, res, next) => {
     const { password, ...info } = user._doc;
     res
       .cookie("accessToken", token, {
-        httpOnly: true, 
-        secure: env.NODE_ENV === "Development" ? false :true,
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+        secure: process.env.NODE_ENV === "Development" ? false : true,
       })
       .status(status.OK)
       .send(info);
@@ -65,8 +66,8 @@ const login = async (req, res, next) => {
 const logout = async (req, res) => {
   res
     .clearCookie("accessToken", {
-      sameSite: "none",
-      secure: true,
+      sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+      secure: process.env.NODE_ENV === "Development" ? false : true,
     })
     .status(status.OK)
     .send("User has been logged out.");
