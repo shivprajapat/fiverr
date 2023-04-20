@@ -3,6 +3,7 @@ import "./register.scss";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import newRequest from "../../utils/newRequest";
+import upload from "../../utils/upload";
 
 const Register = () => {
   const [file, setFile] = useState(null);
@@ -31,10 +32,11 @@ const Register = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const url = await upload(file);
     try {
       await newRequest.post("/auth/register", {
         ...user,
+        img: url,
       });
       toast.success("Register Successfully");
       setTimeout(() => {
