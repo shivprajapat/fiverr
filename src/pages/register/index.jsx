@@ -1,9 +1,47 @@
-import React from 'react'
+import React from "react";
+import "./register.scss";
 
 const Register = () => {
   return (
-    <div>Register</div>
-  )
-}
+    <div className="register">
+      <form>
+        <div className="left">
+          <h2>Create a new account</h2>
+          <label htmlFor="">Username</label>
+          <input name="username" type="text" placeholder="johndoe" />
+          <label htmlFor="">Email</label>
+          <input name="email" type="email" placeholder="email" />
+          <label htmlFor="">Password</label>
+          <input name="password" type="password" />
+          <label htmlFor="">Profile Picture</label>
+          <input type="file" />
+          <label htmlFor="">Country</label>
+          <input name="country" type="text" placeholder="Usa" />
+          <button type="submit">Register</button>
+        </div>
+        <div className="right">
+          <h1>I want to become a seller</h1>
+          <div className="toggle">
+            <label htmlFor="seller">Activate the seller account</label>
+            <label className="switch">
+              <input id="seller" type="checkbox" />
+              <span className="slider round"></span>
+            </label>
+          </div>
+          <label htmlFor="">Phone Number</label>
+          <input name="phone" type="text" placeholder="+1 234 567 89" />
+          <label htmlFor="">Description</label>
+          <textarea
+            placeholder="A short description of yourself"
+            name="desc"
+            id=""
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+      </form>
+    </div>
+  );
+};
 
-export default Register
+export default Register;

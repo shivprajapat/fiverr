@@ -1,33 +1,43 @@
 import React, { useState } from "react";
 import "./login.scss";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import newRequest from "../../utils/newRequest";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://fiverr-backend-9nqc.onrender.com/api/auth/login", {
-        username,
-        password,
-      });
+      const res = await newRequest.post(
+        "auth/login",
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       localStorage.setItem("currentUser", JSON.stringify(res.data));
-      navigate("/");
+      toast.success("Login Successfully");
+      console.log(res.data);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (err) {
-      setError(err.response.data);
+      toast.error(err.response.data);
     }
   };
 
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
-        <h1>Sign in</h1>
+        <h2>Sign in</h2>
         <label htmlFor="">Username</label>
         <input
           name="username"
@@ -43,7 +53,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>
-        {error && error}
+        <Toaster position="top-right" reverseOrder={false} />
       </form>
     </div>
   );
